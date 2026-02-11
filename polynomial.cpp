@@ -14,7 +14,9 @@ void polynomialMultiplication(vector<double>& currentProduct, const double& mult
     vector<double> copiedProduct = currentProduct;
     for (int i = 1; i < currentProduct.size(); i++){
         currentProduct[i] += (multiplier*copiedProduct[i-1]);
-    }
+        }
+    
+
 }
 
 
@@ -52,16 +54,26 @@ we case on the parity of the degree to find the unique polynomial with a given y
     cout << "Enter the y-coordinate of the y-intercept: "; cin >> yIntercept;
 
     for (int i = 0; i < roots.size(); i++){
-        rootProduct *= roots[i];
+    rootProduct *= roots[i];
+}
+//edge case if 0 is a root of the polynomial
+if (rootProduct == 0){
+    if (yIntercept != 0){
+        cout << "No polynomial exists with a zero root and nonzero y-intercept.\n";
+        return 0;
     }
+    // y-intercept is 0 → choose any valid leading coefficient
+    leadingCoeff = 1;
+}
+else{
+    if (degree % 2 == 0){
+        leadingCoeff = yIntercept / rootProduct;
+    }
+    else{
+        leadingCoeff = -yIntercept / rootProduct;
+    }
+}
 
-     if (degree % 2 == 0){
-        leadingCoeff = yIntercept/rootProduct;
-    }
-
-    if (degree % 2 == 1){
-        leadingCoeff = -1 * (yIntercept/rootProduct);
-    }
 
     for (int i = 0; i < polynomial.size(); i++){
         polynomial[i] *= leadingCoeff;
